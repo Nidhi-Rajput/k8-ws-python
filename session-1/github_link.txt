@@ -1,0 +1,2 @@
+Inventorty service : https://hub.docker.com/repository/docker/nidhirajput08/inventory-service
+Order service : https://hub.docker.com/repository/docker/nidhirajput08/order-service
