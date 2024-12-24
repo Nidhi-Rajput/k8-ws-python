@@ -1,0 +1,31 @@
+# Before (No images and no containers)
+docker image ls 
+docker container ls -a
+# Builds
+docker build -t inventory-service:latest -f inventory_service/Dockerfile .
+docker build -t order-service:latest -f order_service/Dockerfile .
+# After (images are created)
+docker image ls 
+# Run containers
+docker run -d -p 8082:8082 --name inventory-container inventory-service:latest
+docker run -d -p 8083:8083 --name order-container order-service:latest
+# After (both containers present)
+docker container ls -a
+# Inventory service call -- displaying stock
+# Order service call -- some internal error
+# List network
+docker network ls 
+# create a network
+docker network create nr_network
+# After (network added)
+docker network ls
+docker inspect nr_network 
+# Add containers to the network
+docker network connect nr_network 28
+docker network connect nr_network d2
+docker inspect nr_network
+# Stop container 
+docker container stop order-container
+docker container rm order-container
+# Run order container by passing URL
+docker run -d --network nr_network -e INVENTORY_SERVICE_URL=http://inventory-container:8082 -p 8083:8083 --name order-container order-service:latest
