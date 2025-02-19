@@ -1,0 +1,30 @@
+# Inventory service: http://localhost:8082
+# Order service: http://localhost:8083
+# Order service depends on inventory service
+
+name: coffee_shop_app
+
+services:
+  inventory-service:
+    build:
+      context: .  
+      dockerfile: ./inventory_service/Dockerfile  
+    ports:
+      - "8082:8082"
+    networks:
+      - app_network
+
+  order-service:
+    build: 
+      context: .  
+      dockerfile: ./order_service/Dockerfile 
+    ports:
+      - "8083:8083"
+    depends_on:
+      - inventory-service
+
+networks:
+ app_network:
+    driver: bridge 
+
+  
