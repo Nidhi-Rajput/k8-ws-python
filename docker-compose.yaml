@@ -20,13 +20,13 @@ services:
       dockerfile: ./order_service/Dockerfile 
     ports:
       - "8083:8083"
+    environment:
+      - INVENTORY_SERVICE_URL=http://inventory-service:8082
     depends_on:
       - inventory-service
     networks:
       - app_network
-
+    
 networks:
  app_network:
     driver: bridge 
-
-  
